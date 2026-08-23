@@ -11,7 +11,7 @@ SRCS_OBJ= ${SRCS:.c=.o}
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 $(NAME): $(SRCS_OBJ)
-	$(CC) $(CFLAGS) $(SRCS_OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRCS_OBJ) -Llibft -lft -o $(NAME)
 
 run: $(NAME)
 	./$(NAME)
@@ -20,9 +20,13 @@ clean:
 	rm -f $(SRCS_OBJ)
 
 fclean: clean
+	make -C libft fclean
 	rm -f $(NAME)
 
 all: $(NAME)
+
+lib:
+	Make -C  libft 
 
 COM="generic com"
 
