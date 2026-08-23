@@ -1,16 +1,19 @@
-CC=gcc
+CC=cc
 CFLAGS= -Werror -Wextra -Wall
 NAME=vboxmanager
 
-SRCS= VBoxStarter.c
+SRCS= vboxstarter.c
 
 SRCS_OBJ= ${SRCS:.c=.o}
 
 %.o: %.c 
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $^ -o $@
 
 $(NAME): $(SRCS_OBJ)
 	$(CC) $(CFLAGS) $(SRCS_OBJ) -o $(NAME)
+
+run: $(NAME)
+	./$(NAME)
 
 clean:
 	rm -f $(SRCS_OBJ)
