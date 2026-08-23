@@ -3,6 +3,8 @@ CFLAGS= -Werror -Wextra -Wall -g
 NAME=vboxmanager
 
 SRCS= 	srcs/vboxstarter.c \
+		srcs/vbox_vm_list.c \
+		srcs/vbox_action_menu.c \
 		srcs/error.c
 
 SRCS_OBJ= ${SRCS:.c=.o}
@@ -13,7 +15,11 @@ SRCS_OBJ= ${SRCS:.c=.o}
 $(NAME): $(SRCS_OBJ) lib
 	$(CC) $(CFLAGS) $(SRCS_OBJ) -Llibft -lft -o $(NAME)
 
+
 run: $(NAME)
+	./$(NAME)
+
+mrun: $(NAME)
 	leaks -atExit -- ./$(NAME)
 
 clean:
