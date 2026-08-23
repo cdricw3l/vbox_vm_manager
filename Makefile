@@ -4,7 +4,7 @@ NAME=vboxmanager
 
 SRCS= VBoxStarter.c
 
-SRCS_OBJ= ${SRCS:*.c=*.o}
+SRCS_OBJ= ${SRCS:.c=.o}
 
 %.o: %.c 
 	$(CC) $(CFLAGS) $< -o $@
@@ -15,7 +15,7 @@ $(NAME): $(SRCS_OBJ)
 clean:
 	rm -f $(SRCS_OBJ)
 
-fclean:clean
+fclean: clean
 	rm -f $(NAME)
 
 all: $(NAME)
