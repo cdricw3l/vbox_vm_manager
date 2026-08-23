@@ -3,14 +3,15 @@ CC=cc
 CFLAGS=
 NAME=vboxmanager
 
-SRCS= vboxstarter.c
+SRCS= 	srcs/vboxstarter.c \
+		srcs/error.c
 
 SRCS_OBJ= ${SRCS:.c=.o}
 
 %.o: %.c 
 	$(CC) -c $(CFLAGS) $^ -o $@
 
-$(NAME): $(SRCS_OBJ)
+$(NAME): $(SRCS_OBJ) lib
 	$(CC) $(CFLAGS) $(SRCS_OBJ) -Llibft -lft -o $(NAME)
 
 run: $(NAME)

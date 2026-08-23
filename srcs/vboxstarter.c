@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   VBoxStarter.c                                      :+:      :+:    :+:   */
+/*   vboxstarter.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/23 14:51:33 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/08/23 15:45:56 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/08/23 17:37:13 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "VBoxStarter.h"
+#include "../include/VBoxStarter.h"
 
 # define CMD "VBoxManage list vms"
 # define PATH "/usr/local/bin/VBoxManage"
@@ -18,6 +18,13 @@
 # define VM_LIST_SIZE_MAX 100
 # define ERR -1
 # define OK 0
+
+int is_path_valide(char *path)
+{
+    if (!access(path, X_OK))
+        return (OK);
+    return (ERR);
+}
 
 int process_buffer(char **vm_list, char *buffer)
 {
@@ -82,8 +89,8 @@ int get_list_vm(char **vm_list)
         {
             if (process_buffer(vm_list, buffer) == ERR)
             {
-                printf("Error processing buffer\n");
                 close(tube[0]);
+                error_msg(PROCESSING_BUFFER);
                 return (ERR);
             }
 
@@ -98,9 +105,10 @@ int get_list_vm(char **vm_list)
 
 int main(void)
 {
-    
     char *vm_list[VM_LIST_SIZE_MAX];
     
+    if (is_path_valide(PATH) == ERR)
+        return (error_msg(INVALIDE_PATH));
     *vm_list = NULL;
     get_list_vm(vm_list);
 
