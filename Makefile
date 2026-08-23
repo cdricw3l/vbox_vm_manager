@@ -1,6 +1,5 @@
 CC=cc
-#CFLAGS= -Werror -Wextra -Wall
-CFLAGS=
+CFLAGS= -Werror -Wextra -Wall -g
 NAME=vboxmanager
 
 SRCS= 	srcs/vboxstarter.c \
@@ -15,14 +14,17 @@ $(NAME): $(SRCS_OBJ) lib
 	$(CC) $(CFLAGS) $(SRCS_OBJ) -Llibft -lft -o $(NAME)
 
 run: $(NAME)
-	./$(NAME)
+	leaks -atExit -- ./$(NAME)
 
 clean:
 	rm -f $(SRCS_OBJ)
 
 fclean: clean
-	make -C libft fclean
 	rm -f $(NAME)
+
+ffclean: fclean
+	make -C libft fclean
+
 
 all: $(NAME)
 
@@ -31,9 +33,11 @@ lib:
 
 COM="generic com"
 
-git: fclean
+git: ffclean
 	git add .
 	git commit -m $(COM)
 	git push origin $(shell git branch --show-current)
 
-.PHONY: all clean fclean $(NAME)
+re: fclean $(NAME)
+
+.PHONY: $(NAME) all git lib re clean fclean ffclean

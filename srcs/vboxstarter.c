@@ -6,18 +6,21 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/23 14:51:33 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/08/23 17:37:13 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/08/23 17:55:17 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/VBoxStarter.h"
 
-# define CMD "VBoxManage list vms"
-# define PATH "/usr/local/bin/VBoxManage"
-# define BUFFER_SIZE 1024
-# define VM_LIST_SIZE_MAX 100
-# define ERR -1
-# define OK 0
+int clean_vm_list(char **vm_list)
+{
+    while (*vm_list)
+    {
+        free(*vm_list);
+        vm_list++;
+    }
+    return (OK);
+}
 
 int is_path_valide(char *path)
 {
@@ -29,12 +32,19 @@ int is_path_valide(char *path)
 int process_buffer(char **vm_list, char *buffer)
 {
     char **split;
-    char **ptr;
+    int i;
+    int j;
 
     split = ft_split(buffer, 10);
     if (!split)
         return (ERR);
-    ft_split_display(split, STDOUT_FILENO);
+    i = 0;
+    while(vm_list[i] && i < VM_LIST_SIZE_MAX)
+        i++;
+    j = 0;
+    while (split[j] && i < VM_LIST_SIZE_MAX - 1)
+        vm_list[i++] = ft_strdup(split[j++]);
+    vm_list[i] = NULL;
     ft_split_clean(&split);
     return (OK);
 }
@@ -111,7 +121,7 @@ int main(void)
         return (error_msg(INVALIDE_PATH));
     *vm_list = NULL;
     get_list_vm(vm_list);
-
+    ft_split_display(vm_list, STDOUT_FILENO);
+    clean_vm_list(vm_list);
     return (0);
-    
 }

@@ -12,12 +12,25 @@
 # include "../libft/libft.h"
 # include "color-codes.h"
 
+# define PATH "/usr/local/bin/VBoxManage"
+# define BUFFER_SIZE 1024
+# define VM_LIST_SIZE_MAX 101
+# define ERR -1
+# define OK 0
+
+
 typedef enum E_ERROR
 {
     PROCESSING_BUFFER,
     INVALIDE_PATH
     
 } T_ERROR;
+
+typedef enum E_COMMANDE
+{
+    CMD_LIST_VM
+    
+} T_COMMANDE;
 
 
 int error_msg(int err_code);
