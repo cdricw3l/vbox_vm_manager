@@ -8,5 +8,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <sys/errno.h>
+#include <string.h>
 
 #endif

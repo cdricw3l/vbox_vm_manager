@@ -1,5 +1,6 @@
 CC=cc
-CFLAGS= -Werror -Wextra -Wall
+#CFLAGS= -Werror -Wextra -Wall
+CFLAGS=
 NAME=vboxmanager
 
 SRCS= vboxstarter.c

@@ -12,16 +12,18 @@
 
 #include "VBoxStarter.h"
 
-#define CMD "VBoxManage list vms"
-#define PATH "/usr/local/bin/VBoxManage"
+# define CMD "VBoxManage list vms"
+# define PATH "/usr/local/bin/VBoxManage"
+# define BUFFER_SIZE 1024
 
 char **get_list_vm(void)
 {
     pid_t pd;
+    char buffer[BUFFER_SIZE];
     int tube[2];
     int return_value;
+    int b_read;
 
-    printf("we are in parent befort fork %d\n", getpid());
     if (pipe(tube) < 0)
     {
         perror("Pipe error");
@@ -37,8 +39,7 @@ char **get_list_vm(void)
     if(pd == 0)
     {
         close(tube[0]);
-        dup2(STDOUT_FILENO, tube[1]);
-        printf("we are in children %s\n", CMD);
+        dup2(tube[1], STDOUT_FILENO);
         char *arg[] = {"VBoxManage", "list", "vms", NULL};
        if (execve(PATH, arg, NULL) < 0)
        {
@@ -48,12 +49,16 @@ char **get_list_vm(void)
        }
     }
     close(tube[1]);
-    dup2(tube[0], STDOUT_FILENO);
+    dup2(tube[0], STDIN_FILENO);
     close(tube[0]);
     waitpid(pd, &return_value, 0);
-    assert(WIFEXITED(return_value));
-    printf("children is finished %d\n" , WEXITSTATUS(return_value));
-    printf("End\n");
+    b_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+    buffer[b_read] = 0;
+    write(STDOUT_FILENO, "[BUFFER]: ", strlen("[BUFFER] "));
+    write(STDOUT_FILENO, buffer, b_read);
+    b_read =  read(tube[0], buffer, BUFFER_SIZE);
+    buffer[b_read] = 0;
+    printf("voici buffer %s\n", buffer);
     return (NULL);
 }
 
