@@ -6,7 +6,7 @@
 /*   By: cdric.b <cdric.b@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/23 14:51:33 by cdric.b           #+#    #+#             */
-/*   Updated: 2026/08/23 19:36:22 by cdric.b          ###   ########.fr       */
+/*   Updated: 2026/08/24 03:59:11 by cdric.b          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int clean_vm_list(char **vm_list)
     return (OK);
 }
 
-int is_path_valide(char *path)
+static int is_path_valide(char *path)
 {
     if (!access(path, X_OK))
         return (OK);

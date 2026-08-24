@@ -32,12 +32,22 @@ typedef enum E_ERROR
 
 typedef enum E_COMMANDE
 {
-    CMD_LIST_VM
+    CMD_HELP,
+    CMD_LIST,
+    CMD_START_ALL,
+    CMD_STOP_ALL
+
     
 } T_COMMANDE;
 
 int get_list_vm(char **vm_list);
 int menu(char **vm_list);
+void display_help(void);
 int error_msg(int err_code);
 
+/* action */
+void    display_vm_list(char **vm_list);
+int     stop_vm(char *vm_name);
+int     start_vm(char *vm_name);
+int     action_all_vm(char **vm_list, int action);
 #endif

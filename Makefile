@@ -5,6 +5,8 @@ NAME=vboxmanager
 SRCS= 	srcs/vboxstarter.c \
 		srcs/vbox_vm_list.c \
 		srcs/vbox_action_menu.c \
+		srcs/vbox_action.c \
+		srcs/help.c \
 		srcs/error.c
 
 SRCS_OBJ= ${SRCS:.c=.o}
