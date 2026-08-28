@@ -1,1 +1,1 @@
-J'ai commencé mais au final, il n'y  pas beaucoup d'intérêt à ce project pour l'instant. A voir Le jour ou j'aurais des agents ia qui aurons besoin de démarrer ou éteindre des VM
+J'ai commencé mais au final, il n'y  pas beaucoup d'intérêt à ce project pour l'instant. On peut via l'interface ou avec une ligne de bash arrêter et démarrer des machine. A voir Le jour ou j'aurais des agents ia qui aurons besoin de démarrer ou éteindre des VM. Ce fut une bonne occasion de pratiquer les syscall fork / pipe / dup 2, pour pas perdre la main.
